@@ -1,5 +1,7 @@
 module NavierStokes2D
 
-# Write your package code here.
+include("grids.jl")
+
+export Grid
 
 end
