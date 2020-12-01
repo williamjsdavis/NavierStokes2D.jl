@@ -12,5 +12,7 @@ Grid(5., 5., 64, 64)
     @test test_grid.ny == 64
     @test size(test_grid.xRange) == (32,)
     @test size(test_grid.yRange) == (64,)
+    @test isa(test_grid.Δx, Float64)
+    @test isa(test_grid.Δy, Float64)
 
 end
