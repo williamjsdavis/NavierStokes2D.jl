@@ -1,3 +1,4 @@
+# NOTE: Add staggered grids
 struct Grid
     xmax::Float64
     ymax::Float64
