@@ -30,6 +30,6 @@ export DiffusionProblem
 
 include("solutions.jl")
 export DiffusionSolution
-export get_analytic
+export get_analytic, solve
 
 end

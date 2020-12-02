@@ -1,14 +1,15 @@
 using NavierStokes2D
 using Test
 
-grid = Grid(1., 2., 16, 32)
+grid = Grid(1., 2., 8, 16)
 params = Parameters(0.1, 0.2, (0.0, 1.0))
 include("analytic_functions.jl")
 u₀ = make_gaussian(grid)
 u_analytic(t) = solution_gaussian(grid, t, params.ν)
-model = DiffusionModel(zeros(16, 32), grid, params)
+model = DiffusionModel(zeros(8, 16), grid, params)
 model_plus_ana = DiffusionModel(u₀, u_analytic, grid, params)
-prob2 = DiffusionProblem(model, CrankNickolsonDiffusion())
+prob2 = DiffusionProblem(model_plus_ana, CrankNickolsonDiffusion())
+sol = solve(prob2)
 
 @testset "Grid tests" begin
 
@@ -117,13 +118,21 @@ end
 
 @testset "Diffusion solution tests" begin
 
-    grid = Grid(1., 2., 16, 32)
+    grid = Grid(1., 2., 8, 16)
     params = Parameters(0.1, 0.2, (0.0, 1.0))
-    model = DiffusionModel(zeros(16, 32), grid, params)
+    model = DiffusionModel(zeros(8, 16), grid, params)
     prob = DiffusionProblem(model, ExplicitDiffusion())
+
     sol = DiffusionSolution(prob, true)
 
     @test sol.u_analytic == nothing
+    @test sol.errors == nothing
+
+    @test length(sol.prob.model.t) == 7
+    sol2 = solve(prob)
+    @test isa(sol2, DiffusionSolution{Nothing})
+    @test sol2.u_analytic == nothing
+    @test sol2.errors == nothing
     # NOTE: Assume other methods test similarly
 
     include("analytic_functions.jl")
@@ -135,6 +144,11 @@ end
 
     @test isa(sol_plus_ana.u_analytic, Array{Float64, 2})
     @test isa(sol_plus_ana.errors, Array{Float64, 2})
+
+    sol2_plus_ana = solve(prob_plus_ana)
+    @test isa(sol2_plus_ana, DiffusionSolution{Array{Float64, 2}})
+    @test isa(sol2_plus_ana.u_analytic, Array{Float64, 2})
+    @test isa(sol2_plus_ana.errors, Array{Float64, 2})
     # NOTE: Assume other methods test similarly
 
 end
