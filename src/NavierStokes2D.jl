@@ -1,7 +1,8 @@
 module NavierStokes2D
 
 include("grids.jl")
+include("parameters.jl")
 
-export Grid
+export Grid, Parameters
 
 end
