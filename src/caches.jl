@@ -1,4 +1,5 @@
 abstract type DiffusionCache end
+
 mutable struct ExplicitDiffusionCache <: DiffusionCache
     u::Array{Float64,2}
     uprev::Array{Float64,2}

@@ -59,6 +59,28 @@ end
     @test explicitDiffusionCache.uprev == u
     @test explicitDiffusionCache.t == 0.0
 
+    grid = Grid(1., 2., 16, 32)
+    params = Parameters(0.1, 0.2, (0.0, 1.0))
+    model = DiffusionModel(zeros(16, 32), grid, params)
+    cache = init_cache(model, ExplicitDiffusion())
+    @test isa(cache, ExplicitDiffusionCache)
+
     # NOTE: Assume other caches test similarly
+
+end
+
+@testset "Diffusion methods tests" begin
+
+    grid = Grid(1., 2., 16, 32)
+    params = Parameters(0.1, 0.2, (0.0, 1.0))
+    model = DiffusionModel(zeros(16, 32), grid, params)
+
+    set_method = ExplicitDiffusion()
+    cache = init_cache(model, ExplicitDiffusion())
+
+    perform_step!(model, set_method, cache)
+
+    # TODO: Add an explicit test here
+    # NOTE: Assume other methods test similarly
 
 end
