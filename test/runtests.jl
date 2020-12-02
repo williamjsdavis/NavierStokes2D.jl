@@ -80,7 +80,9 @@ end
 
     perform_step!(model, set_method, cache)
 
-    # TODO: Add an explicit test here
+    @test isa(model, DiffusionModel)
+
+    # TODO: Add more explicit tests here
     # NOTE: Assume other methods test similarly
 
 end

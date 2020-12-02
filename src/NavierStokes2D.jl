@@ -14,8 +14,13 @@ include("methods_diffusion.jl")
 export ExplicitDiffusion, CrankNickolsonDiffusion, ADIDiffusion
 export perform_step!
 
-
 include("cache_initialisers.jl")
 export init_cache
+
+include("matrix_solvers.jl")
+export init_CN, init_ADI
+
+include("boundary_conditions.jl")
+export apply_BCs!
 
 end
