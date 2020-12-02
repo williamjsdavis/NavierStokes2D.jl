@@ -1,5 +1,7 @@
 module NavierStokes2D
 
+using SparseArrays, LinearAlgebra
+
 include("grids.jl")
 include("parameters.jl")
 export Grid, Parameters
@@ -22,5 +24,8 @@ export init_CN, init_ADI
 
 include("boundary_conditions.jl")
 export apply_BCs!
+
+include("problems.jl")
+export DiffusionProblem
 
 end

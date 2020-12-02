@@ -7,7 +7,7 @@ function init_cache(model, method::CrankNickolsonDiffusion)
 
     a1, a2 = init_CN(model)
 
-    t = copy(mod_test.parameters.tspan[1])
+    t = copy(model.parameters.tspan[1])
 
     return CNDiffusionCache(u, uprev, rhs, a1, a2, t);
 end
@@ -19,7 +19,7 @@ function init_cache(model, method::ADIDiffusion)
 
     a1x, a1y, a2x, a2y = init_ADI(model)
 
-    t = copy(mod_test.parameters.tspan[1])
+    t = copy(model.parameters.tspan[1])
 
     return ADIDiffusionCache(u, uhalf, uprev, rhs, a1x, a1y, a2x, a2y, t);
 end

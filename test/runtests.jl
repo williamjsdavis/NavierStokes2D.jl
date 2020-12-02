@@ -8,6 +8,7 @@ u₀ = make_gaussian(grid)
 u_analytic(t) = solution_gaussian(grid, t, params.ν)
 model = DiffusionModel(zeros(16, 32), grid, params)
 model_plus_ana = DiffusionModel(u₀, u_analytic, grid, params)
+prob2 = DiffusionProblem(model, CrankNickolsonDiffusion())
 
 @testset "Grid tests" begin
 
@@ -84,5 +85,32 @@ end
 
     # TODO: Add more explicit tests here
     # NOTE: Assume other methods test similarly
+
+end
+
+@testset "Diffusion problems tests" begin
+
+    grid = Grid(1., 2., 16, 32)
+    params = Parameters(0.1, 0.2, (0.0, 1.0))
+    model = DiffusionModel(zeros(16, 32), grid, params)
+
+    set_method = ExplicitDiffusion()
+    cache = init_cache(model, ExplicitDiffusion())
+
+    prob = DiffusionProblem(model, set_method, cache)
+
+    @test isa(prob, DiffusionProblem)
+    # NOTE: Assume other methods test similarly
+
+    prob1 = DiffusionProblem(model, ExplicitDiffusion())
+    prob2 = DiffusionProblem(model, CrankNickolsonDiffusion())
+    prob3 = DiffusionProblem(model, ADIDiffusion())
+
+    @test typeof(prob1).parameters[1] == ExplicitDiffusion
+    @test typeof(prob2).parameters[1] == CrankNickolsonDiffusion
+    @test typeof(prob3).parameters[1] == ADIDiffusion
+    @test typeof(prob1).parameters[2] == ExplicitDiffusionCache
+    @test typeof(prob2).parameters[2] == CNDiffusionCache
+    @test typeof(prob3).parameters[2] == ADIDiffusionCache
 
 end
