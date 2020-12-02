@@ -28,4 +28,8 @@ export apply_BCs!
 include("problems.jl")
 export DiffusionProblem
 
+include("solutions.jl")
+export DiffusionSolution
+export get_analytic
+
 end

@@ -114,3 +114,27 @@ end
     @test typeof(prob3).parameters[2] == ADIDiffusionCache
 
 end
+
+@testset "Diffusion solution tests" begin
+
+    grid = Grid(1., 2., 16, 32)
+    params = Parameters(0.1, 0.2, (0.0, 1.0))
+    model = DiffusionModel(zeros(16, 32), grid, params)
+    prob = DiffusionProblem(model, ExplicitDiffusion())
+    sol = DiffusionSolution(prob, true)
+
+    @test sol.u_analytic == nothing
+    # NOTE: Assume other methods test similarly
+
+    include("analytic_functions.jl")
+    u₀ = make_gaussian(grid)
+    u_analytic(t) = solution_gaussian(grid, t, params.ν)
+    model_plus_ana = DiffusionModel(u₀, u_analytic, grid, params)
+    prob_plus_ana = DiffusionProblem(model_plus_ana, ExplicitDiffusion())
+    sol_plus_ana = DiffusionSolution(prob_plus_ana, true)
+
+    @test isa(sol_plus_ana.u_analytic, Array{Float64, 2})
+    @test isa(sol_plus_ana.errors, Array{Float64, 2})
+    # NOTE: Assume other methods test similarly
+
+end
