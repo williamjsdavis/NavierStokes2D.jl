@@ -50,3 +50,15 @@ end
     @test isa(model_plus_ana.t, Vector{Float64})
 
 end
+
+@testset "Cache tests" begin
+
+    u = zeros(16, 32)
+    explicitDiffusionCache = ExplicitDiffusionCache(u, copy(u), 0.0)
+    @test explicitDiffusionCache.u == u
+    @test explicitDiffusionCache.uprev == u
+    @test explicitDiffusionCache.t == 0.0
+
+    # NOTE: Assume other caches test similarly
+
+end
