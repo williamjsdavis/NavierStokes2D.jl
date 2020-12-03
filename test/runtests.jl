@@ -1,6 +1,7 @@
 using NavierStokes2D
 using Test
 
+#=
 grid = Grid(1., 2., 8, 16)
 params = Parameters(0.1, 0.2, (0.0, 1.0))
 include("analytic_functions.jl")
@@ -10,6 +11,7 @@ model = DiffusionModel(zeros(8, 16), grid, params)
 model_plus_ana = DiffusionModel(u₀, u_analytic, grid, params)
 prob2 = DiffusionProblem(model_plus_ana, CrankNickolsonDiffusion())
 sol = solve(prob2)
+=#
 
 @testset "Grid tests" begin
 

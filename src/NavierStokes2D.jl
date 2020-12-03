@@ -1,6 +1,7 @@
 module NavierStokes2D
 
 using SparseArrays, LinearAlgebra
+using Future: copy!
 
 include("grids.jl")
 include("parameters.jl")
