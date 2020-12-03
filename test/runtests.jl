@@ -40,7 +40,7 @@ end
 
     grid = Grid(1., 2., 16, 32)
     params = Parameters(0.1, 0.2, (0.0, 1.0))
-    model = DiffusionModel(zeros(16, 32), grid, params)
+    model = DiffusionModel(zeros(32, 16), grid, params)
     @test model.u_analytic == nothing
     @test isa(model.Δt, Float64)
     @test isa(model.t, Vector{Float64})
@@ -65,7 +65,7 @@ end
 
     grid = Grid(1., 2., 16, 32)
     params = Parameters(0.1, 0.2, (0.0, 1.0))
-    model = DiffusionModel(zeros(16, 32), grid, params)
+    model = DiffusionModel(zeros(32, 16), grid, params)
     cache = init_cache(model, ExplicitDiffusion())
     @test isa(cache, ExplicitDiffusionCache)
 
@@ -77,7 +77,7 @@ end
 
     grid = Grid(1., 2., 16, 32)
     params = Parameters(0.1, 0.2, (0.0, 1.0))
-    model = DiffusionModel(zeros(16, 32), grid, params)
+    model = DiffusionModel(zeros(32, 16), grid, params)
 
     set_method = ExplicitDiffusion()
     cache = init_cache(model, ExplicitDiffusion())
@@ -95,7 +95,7 @@ end
 
     grid = Grid(1., 2., 16, 32)
     params = Parameters(0.1, 0.2, (0.0, 1.0))
-    model = DiffusionModel(zeros(16, 32), grid, params)
+    model = DiffusionModel(zeros(32, 16), grid, params)
 
     set_method = ExplicitDiffusion()
     cache = init_cache(model, ExplicitDiffusion())
@@ -122,7 +122,7 @@ end
 
     grid = Grid(1., 2., 8, 16)
     params = Parameters(0.1, 0.2, (0.0, 1.0))
-    model = DiffusionModel(zeros(8, 16), grid, params)
+    model = DiffusionModel(zeros(16, 8), grid, params)
     prob = DiffusionProblem(model, ExplicitDiffusion())
 
     sol = DiffusionSolution(prob, true)
